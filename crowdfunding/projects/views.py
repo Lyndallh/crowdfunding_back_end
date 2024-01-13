@@ -1,8 +1,8 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Project
-from .serializers import ProjectSerializer
+from .models import Project, Pledge
+from .serializers import ProjectSerializer, PledgeSerializer
 from django.http import Http404
 from rest_framework import status
 
@@ -38,3 +38,23 @@ class ProjectDetail(APIView):
         project = self.get_object(pk)
         serializer = ProjectSerializer(project)
         return Response(serializer.data)
+
+class PledgeList(APIView):
+    
+    def get(self, request):
+       pledges = Pledge.objects.all()
+       serializer = PledgeSerializer(pledges, many=True)
+       return Response(serializer.data)
+    
+    def post(self, request):
+       
+        serializer = PledgeSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(
+                serializer.data,
+                status=status.HTTP_201_CREATED
+            )
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST)
