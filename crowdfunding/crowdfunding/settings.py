@@ -45,11 +45,8 @@ INSTALLED_APPS = [
     'projects.apps.ProjectsConfig',
     'users.apps.UsersConfig',
     'rest_framework',
-<<<<<<< HEAD
     'corsheaders',
-=======
     'rest_framework.authtoken',
->>>>>>> authentication
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
