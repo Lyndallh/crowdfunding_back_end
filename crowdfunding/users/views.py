@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from .models import CustomUser
 from .serializers import CustomUserSerializer
+from .models import CustomUser
+
 class CustomUserList(APIView):
     def get(self, request):
         users = CustomUser.objects.all()
