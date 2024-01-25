@@ -27,6 +27,13 @@ class ProjectList(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+# QUESTION: 
+    # IS THIS HOW YOU IMPLEMENT "Returns the projects in order of date created"
+    # (Also should include url with /projects/?order_by=date_created)
+
+    # def get_context_data(self, **kwargs):
+    #         context = super().get_context_data(**kwargs)
+    #         context['sort_projects'] = ProjectList.objects.all().order_by('-date_created')
 class ProjectDetail(APIView):
     permission_classes = [
     permissions.IsAuthenticatedOrReadOnly,
@@ -49,12 +56,18 @@ class ProjectDetail(APIView):
     def put(self, request, pk):
         project = self.get_object(pk)
         serializer = ProjectDetailSerializer(
-                instance=project,
-                data=request.data,
-                partial=True
-            )
+            instance=project,
+            data=request.data,
+            partial=True
+        )
         if serializer.is_valid():
             serializer.save()
+            return Response(serializer.data)
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+    
 
 class PledgeList(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
@@ -95,7 +108,7 @@ class PledgeDetail(APIView):
         serializer = PledgeDetailSerializer(pledge)
         return Response(serializer.data)
 
-# only use if users can edit their pledges
+# Not Required - only use if users can edit their pledges
     # def put(self, request, pk):
     #     project = self.get_object(pk)
     #     serializer = ProjectDetailSerializer(
