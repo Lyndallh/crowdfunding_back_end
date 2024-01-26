@@ -8,16 +8,28 @@ class CustomUserSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
         
     def create(self, validated_data):
-        return CustomUser.objects.create_user(**validated_data)
+            user = CustomUser.objects.create(
+                first_name = validated_data['first_name'],
+                last_name = validated_data['last_name'],
+                username = validated_data['username'],
+                email = validated_data['email']
+            )
+            user.set_password(validated_data['password'])
+            user.save()
+            return user
+        
+    # def create(self, validated_data):
+    #     return CustomUser.objects.create_user(**validated_data)
+
+# 
+# class CustomUserDetailSerializer(CustomUserSerializer):
     
-class CustomUserDetailSerializer(CustomUserSerializer):
-    
-    def update(self, instance, validated_data):
-        instance.username = validated_data.get('username', instance.username)
-        instance.first_name = validated_data.get('first_name', instance.first_name)
-        instance.last_name = validated_data.get('last_name', instance.last_name)
-        instance.email = validated_data.get('email', instance.email)
-        return instance
+#     def update(self, instance, validated_data):
+#         instance.username = validated_data.get('username', instance.username)
+#         instance.first_name = validated_data.get('first_name', instance.first_name)
+#         instance.last_name = validated_data.get('last_name', instance.last_name)
+#         instance.email = validated_data.get('email', instance.email)
+#         return instance
         
 # This serializer looks a lot like our others, 
 # but there's a couple of things going on herethat are unique to users!
