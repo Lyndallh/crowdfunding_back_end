@@ -6,20 +6,20 @@ class CustomUserSerializer(serializers.ModelSerializer):
         model = CustomUser        
         fields ='__all__' 
         extra_kwargs = {'password': {'write_only': True}}
+
+    # def create(self, validated_data):
+            # user = CustomUser.objects.create(
+            #     first_name = validated_data['first_name'],
+            #     last_name = validated_data['last_name'],
+            #     username = validated_data['username'],
+            #     email = validated_data['email']
+            # )
+            # user.set_password(validated_data['password'])
+            # user.save()
+            # return user
         
     def create(self, validated_data):
-            user = CustomUser.objects.create(
-                first_name = validated_data['first_name'],
-                last_name = validated_data['last_name'],
-                username = validated_data['username'],
-                email = validated_data['email']
-            )
-            user.set_password(validated_data['password'])
-            user.save()
-            return user
-        
-    # def create(self, validated_data):
-    #     return CustomUser.objects.create_user(**validated_data)
+        return CustomUser.objects.create_user(**validated_data)
 
 # 
 # class CustomUserDetailSerializer(CustomUserSerializer):
