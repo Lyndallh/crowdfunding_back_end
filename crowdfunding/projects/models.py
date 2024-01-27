@@ -9,7 +9,7 @@ class Project(models.Model):
     is_open = models.BooleanField()
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now_add=True)
-    endDateTime = models.DateTimeField()
+    date_close = models.DateTimeField()
     owner = models.ForeignKey(
         get_user_model(),
         on_delete=models.CASCADE,

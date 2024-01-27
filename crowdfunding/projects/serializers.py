@@ -31,6 +31,7 @@ class ProjectDetailSerializer(ProjectSerializer):
         # Update the date_modified with timestamp        
         instance.date_modified = datetime.now()
         
+        instance.date_close = validated_data.get('date_close', instance.date_close)
         instance.owner = validated_data.get('owner', instance.owner)
         instance.save()
         return instance
