@@ -41,11 +41,14 @@ Potential donors: Private enterprise, philanthropists and the general public
 - [ ] Implement responsive design. **future feature in REACT project*
 
 ## Additional features
+
 - [x] Autopopulate date created (timestamp) for projects, this does not update on when updating a project
 - [x] Implement a date modified feild that autopopulates (timestamp) when updating a project
 - [x] Implement a date created feild for pledges
 - [x] Autopopulate date created (timestamp) for pledges, this does not update on when updating a project
-
+- [x] Added date_close feild to projects 
+- [ ] Calculate is_open status using date_close. Giving the ability for historic projects to remain in database (no deleting), but rather auto close after period set by owner **future feature*
+  
 ## Part A Submission
 
 Deployed API project: https://crowdfunding-back-end-equipme.fly.dev
@@ -106,6 +109,6 @@ curl --request POST \
 	"goal": "<goal amount integer>",
 	"image": "<image url>",
 	"is_open": "<boolean>",
-	"date_end": "<date for the project to close (isoformat)>"
+	"date_close": "<date for the project to close (isoformat)>"
     }'
 ```
