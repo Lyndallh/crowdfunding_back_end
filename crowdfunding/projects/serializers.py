@@ -39,5 +39,3 @@ class ProjectDetailSerializer(ProjectSerializer):
         instance.owner = validated_data.get('owner', instance.owner)
         instance.save()
         return instance
-
-    
