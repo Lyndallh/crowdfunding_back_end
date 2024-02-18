@@ -7,11 +7,32 @@ class PledgeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pledge
         fields = '__all__'
+
+class PledgeDetailSerializer(PledgeSerializer):
+    pledges = PledgeSerializer(many=True, read_only =True)
+
+
 class ProjectSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.id')
+    # sum_pledges = serializers.ReadOnlyField()
+    # pledges = PledgeSerializer(many=True, read_only =True)
+
     class Meta:        
         model = Project        
-        fields ='__all__'
+        fields = ('__all__')
+        # (
+        #     'id',
+        #     'owner',
+        #     'title',
+        #     'description',
+        #     'goal',
+        #     'image',
+        #     'is_open',
+        #     'date_created',
+        #     'date_modified',
+        #     'date_close',
+        #     'pledges',
+        #     'sum_pledges')
 
 class ProjectDetailSerializer(ProjectSerializer):
     pledges = PledgeSerializer(many=True, read_only =True)
@@ -36,8 +57,6 @@ class ProjectDetailSerializer(ProjectSerializer):
         instance.save()
         return instance
 
-class PledgeDetailSerializer(PledgeSerializer):
-    pledges = PledgeSerializer(many=True, read_only =True)
     
 # don't need update because I don't want to PUT/UPDATE pledges
     # def update(self, instance, validated_data):
