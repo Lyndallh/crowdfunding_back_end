@@ -35,11 +35,8 @@ class ProjectList(APIView):
     #         context = super().get_context_data(**kwargs)
     #         context['sort_projects'] = ProjectList.objects.all().order_by('-date_created')
 class ProjectDetail(APIView):
-    permission_classes = [
-    permissions.IsAuthenticatedOrReadOnly,
-    IsOwnerOrReadOnly
-    ]
-
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,IsOwnerOrReadOnly]
+    
     def get_object(self, pk):
         try:
             project = Project.objects.get(pk=pk)

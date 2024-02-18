@@ -15,22 +15,22 @@ class Project(models.Model):
         on_delete=models.CASCADE,
         related_name='owned_projects'
         )
-    # @property
-    # def sum_pledges(self):
-    #     sum_pledges = self.pledges.aggregate(sum=models.Sum('amount'))['sum']
-    #     if sum_pledges:
-    #         return sum_pledges
-    #     else:
-    #         return 0
+    @property
+    def sum_pledges(self):
+        sum_pledges = self.pledges.aggregate(sum=models.Sum('amount'))['sum']
+        if sum_pledges:
+            return sum_pledges
+        else:
+            return 0
 
 class Pledge(models.Model):
     amount = models.IntegerField()
     comment = models.CharField(max_length=200)
     anonymous = models.BooleanField()
     project = models.ForeignKey(
-          'Project',
-      on_delete=models.CASCADE,
-      related_name='project_pledges'
+        'Project',
+        on_delete=models.CASCADE,
+        related_name='pledges'
     )
     supporter = models.ForeignKey(
         get_user_model(),
